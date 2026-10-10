@@ -1,0 +1,288 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Men's Fashion Store</title>
+
+    <style>
+      /* ---------- Global ---------- */
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f5f5f5;
+        color: #222;
+      }
+
+      /* ---------- Header ---------- */
+
+      .header {
+        width: 100%;
+        background: #111;
+        color: white;
+        padding: 20px 8%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .logo span {
+        color: #d4af37;
+      }
+
+      .header a {
+        color: white;
+        text-decoration: none;
+        margin-left: 25px;
+        font-size: 15px;
+      }
+
+      .header a:hover {
+        color: #d4af37;
+      }
+
+      /* ---------- Home Container ---------- */
+
+      .home-container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 60px auto;
+        text-align: center;
+      }
+
+      .home-container h1 {
+        font-size: 38px;
+        margin-bottom: 10px;
+      }
+
+      .home-container .welcome {
+        color: #777;
+        margin-bottom: 40px;
+      }
+
+      /* ---------- Category Section ---------- */
+
+      .category-section {
+        width: 90%;
+        max-width: 1100px;
+        margin: 50px auto;
+        text-align: center;
+      }
+
+      .category-section h2 {
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+
+      .category-subtitle {
+        color: #777;
+        margin-bottom: 30px;
+      }
+
+      /* ---------- Category Grid ---------- */
+
+      .category-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        margin-top: 30px;
+      }
+
+      /* ---------- Category Card ---------- */
+
+      .category-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+      }
+
+      .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+      }
+
+      .category-card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .category-card h3 {
+        font-size: 22px;
+        margin: 15px 0 10px;
+      }
+
+      .category-card a {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        background: #111;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      .category-card a:hover {
+        background: #d4af37;
+        color: #111;
+      }
+
+      /* ---------- Responsive ---------- */
+
+      @media (max-width: 768px) {
+        .category-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .header {
+          padding: 18px 5%;
+        }
+
+        .logo {
+          font-size: 20px;
+        }
+
+        .header a {
+          margin-left: 10px;
+        }
+
+        .home-container h1 {
+          font-size: 30px;
+        }
+
+        .category-section h2 {
+          font-size: 26px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="logo">MEN<span>STYLE</span></div>
+
+      <nav>
+        {% if user.is_authenticated %}
+
+        <a href="{% url 'logout' %}"> Logout </a>
+
+        {% else %}
+
+        <a href="{% url 'login' %}"> Login </a>
+
+        <a href="{% url 'register' %}"> Register </a>
+
+        {% endif %}
+      </nav>
+    </header>
+
+    <main class="home-container">
+      {% if user.is_authenticated %}
+
+      <h1>Welcome, {{ user.username }}</h1>
+
+      <p class="welcome">Welcome to Men's Fashion Store</p>
+
+      {% else %}
+
+      <h1>Men's Fashion Store</h1>
+
+      <p class="welcome">Discover your style.</p>
+
+      {% endif %}
+
+      <section class="category-section">
+        <h2>Shop by Category</h2>
+
+        <p class="category-subtitle">
+          Explore our men's fashion collection
+        </p>
+
+        <div class="category-grid">
+          {% for category in categories %}
+
+          <div class="category-card">
+            {% if category.name == "Shirts" %}
+
+            <img
+              src="{% static 'images/categories/Shirts.jpeg' %}"
+              alt="Shirts"
+            />
+
+            {% elif category.name == "T-Shirts" %}
+
+            <img
+              src="{% static 'images/categories/T-Shirts.jpeg' %}"
+              alt="T-Shirts"
+            />
+
+            {% elif category.name == "Jeans" %}
+
+            <img
+              src="{% static 'images/categories/Jeans.jpeg' %}"
+              alt="Jeans"
+            />
+
+            {% elif category.name == "Pants" %}
+
+            <img
+              src="{% static 'images/categories/Pants.jpeg' %}"
+              alt="Pants"
+            />
+
+            {% elif category.name == "Jackets" %}
+
+            <img
+              src="{% static 'images/categories/Jackets.jpeg' %}"
+              alt="Jackets"
+            />
+
+            {% elif category.name == "Shoes" %}
+
+            <img
+              src="{% static 'images/categories/Shoes.jpeg' %}"
+              alt="Jackets"
+            />
+
+            {% endif %}
+
+            <h3>{{ category.name }}</h3>
+
+            <a href="{% url 'category_products' category.id %}">
+              View Products
+            </a>
+          </div>
+
+          {% empty %}
+
+          <p>No categories available.</p>
+
+          {% endfor %}
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
